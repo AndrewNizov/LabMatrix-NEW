@@ -136,7 +136,7 @@ public:
     friend std::istream& operator>>(std::istream& in, TMatrix<T>& mt);
 };
 
-//pеализация операторов вводавывода
+//pеализация операторов ввода вывода
 template <typename ValType>
 std::ostream& operator<<(std::ostream& out, const TMatrix<ValType>& mt) {
     out << mt.rows << " " << mt.cols << "\n";
