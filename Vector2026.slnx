@@ -3,7 +3,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Vector2026/Vector2026.vcxproj" />
-  <Project Path="VectorLib/VectorLib.vcxproj" />
-  <Project Path="VectorTest/VectorTest.vcxproj" />
+  <Project Path="Vector2026/Vector2026.vcxproj" Id="58a84536-a92d-4314-a662-f9eb88451992" />
+  <Project Path="VectorLib/VectorLib.vcxproj" Id="016c7d3d-4451-4761-ac2f-6aa83f526cbd" />
+  <Project Path="VectorTest/VectorTest.vcxproj" Id="c9ff84cb-0c1e-4c72-8db6-ab1b9905b711" />
 </Solution>

@@ -1164,6 +1164,62 @@ TEST(ClassVector, can_shrink_to_fit) {
     EXPECT_DOUBLE_EQ(vec[0], 1);
     EXPECT_DOUBLE_EQ(vec[4], 5);
 }
+#include "TMathVector.h"
 
+TEST(ClassTMathVector, can_add_vectors) {
+    TMathVector<double> v1(3);
+    TMathVector<double> v2(3);
+    v1[0] = 1.0; v1[1] = 2.0; v1[2] = 3.0;
+    v2[0] = 4.0; v2[1] = 5.0; v2[2] = 6.0;
+
+    TMathVector<double> res = v1 + v2;
+
+    EXPECT_DOUBLE_EQ(res[0], 5.0);
+    EXPECT_DOUBLE_EQ(res[1], 7.0);
+    EXPECT_DOUBLE_EQ(res[2], 9.0);
+}
+
+TEST(ClassTMathVector, can_subtract_vectors) {
+    TMathVector<double> v1(3);
+    TMathVector<double> v2(3);
+    v1[0] = 5.0; v1[1] = 7.0; v1[2] = 9.0;
+    v2[0] = 1.0; v2[1] = 2.0; v2[2] = 3.0;
+
+    TMathVector<double> res = v1 - v2;
+
+    EXPECT_DOUBLE_EQ(res[0], 4.0);
+    EXPECT_DOUBLE_EQ(res[1], 5.0);
+    EXPECT_DOUBLE_EQ(res[2], 6.0);
+}
+
+TEST(ClassTMathVector, can_calculate_scalar_product) {
+    TMathVector<double> v1(3);
+    TMathVector<double> v2(3);
+    v1[0] = 1.0; v1[1] = 2.0; v1[2] = 3.0;
+    v2[0] = 4.0; v2[1] = 5.0; v2[2] = 6.0;
+
+    double product = v1 * v2; //1*4+2*5+3*6 =32
+    EXPECT_DOUBLE_EQ(product, 32.0);
+}
+
+TEST(ClassTMathVector, can_multiply_by_scalar) {
+    TMathVector<double> v(3);
+    v[0] = 1.0; v[1] = 2.0; v[2] = 3.0;
+
+    TMathVector<double> res = v * 3.0;
+
+    EXPECT_DOUBLE_EQ(res[0], 3.0);
+    EXPECT_DOUBLE_EQ(res[1], 6.0);
+    EXPECT_DOUBLE_EQ(res[2], 9.0);
+}
+
+TEST(ClassTMathVector, throws_when_operations_with_different_sizes) {
+    TMathVector<double> v1(2);
+    TMathVector<double> v2(3);
+
+    EXPECT_THROW(v1 + v2, std::invalid_argument);
+    EXPECT_THROW(v1 - v2, std::invalid_argument);
+    EXPECT_THROW(v1 * v2, std::invalid_argument);
+}
 
 #endif
