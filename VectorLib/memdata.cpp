@@ -1,4 +1,5 @@
 #include "memdata.h"
+#include "TMathVector.h"
 
 //функции вне класса
 int calculate_capacity(size_t size) {
@@ -208,5 +209,7 @@ void quick_sort_recursive(vector_type* data, int left, int right) {
 
 //инстанцирование шаблона (генерация объектного файла под определенный тд):
 template class MemData<double>;
+template class MemData<TMathVector<double>>;
+
 template void quick_sort(MemData<double>&);
 template void shuffle(MemData<double>&);

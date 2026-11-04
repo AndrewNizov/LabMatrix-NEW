@@ -1222,4 +1222,146 @@ TEST(ClassTMathVector, throws_when_operations_with_different_sizes) {
     EXPECT_THROW(v1 * v2, std::invalid_argument);
 }
 
+#include "TMatrix.h"
+
+TEST(ClassTMatrix, can_create_matrix_with_positive_dimension) {
+    ASSERT_NO_THROW(TMatrix<double> m(3, 3));
+}
+
+TEST(ClassTMatrix, can_get_rows_and_cols) {
+    TMatrix<double> m(3, 4);
+    EXPECT_EQ(3, m.get_rows());
+    EXPECT_EQ(4, m.get_cols());
+}
+
+TEST(ClassTMatrix, can_create_copied_matrix) {
+    TMatrix<double> m(2, 2);
+    m[0][0] = 1.0; m[0][1] = 2.0;
+    m[1][0] = 3.0; m[1][1] = 4.0;
+
+    TMatrix<double> m1(m);
+
+    EXPECT_DOUBLE_EQ(m1[0][0], 1.0);
+    EXPECT_DOUBLE_EQ(m1[0][1], 2.0);
+    EXPECT_DOUBLE_EQ(m1[1][0], 3.0);
+    EXPECT_DOUBLE_EQ(m1[1][1], 4.0);
+}
+
+TEST(ClassTMatrix, can_set_and_get_element) {
+    TMatrix<double> m(2, 2);
+    m[0][0] = 5.5;
+    EXPECT_DOUBLE_EQ(m[0][0], 5.5);
+}
+
+TEST(ClassTMatrix, compare_equal_matrices_return_true) {
+    TMatrix<double> m1(2, 2);
+    TMatrix<double> m2(2, 2);
+    m1[0][0] = 1.0; m2[0][0] = 1.0;
+
+    EXPECT_TRUE(m1 == m2);
+}
+
+TEST(ClassTMatrix, compare_not_equal_matrices_return_true) {
+    TMatrix<double> m1(2, 2);
+    TMatrix<double> m2(2, 2);
+    m1[0][0] = 1.0; m2[0][0] = 2.0;
+
+    EXPECT_TRUE(m1 != m2);
+}
+
+TEST(ClassTMatrix, can_add_matrices) {
+    TMatrix<double> m1(2, 2);
+    TMatrix<double> m2(2, 2);
+
+    m1[0][0] = 1.0; m1[0][1] = 2.0;
+    m1[1][0] = 3.0; m1[1][1] = 4.0;
+
+    m2[0][0] = 5.0; m2[0][1] = 6.0;
+    m2[1][0] = 7.0; m2[1][1] = 8.0;
+
+    TMatrix<double> res = m1 + m2;
+
+    EXPECT_DOUBLE_EQ(res[0][0], 6.0);
+    EXPECT_DOUBLE_EQ(res[0][1], 8.0);
+    EXPECT_DOUBLE_EQ(res[1][0], 10.0);
+    EXPECT_DOUBLE_EQ(res[1][1], 12.0);
+}
+
+TEST(ClassTMatrix, cant_add_matrices_with_different_sizes) {
+    TMatrix<double> m1(2, 2);
+    TMatrix<double> m2(3, 3);
+    EXPECT_THROW(m1 + m2, std::invalid_argument);
+}
+
+TEST(ClassTMatrix, can_subtract_matrices) {
+    TMatrix<double> m1(2, 2);
+    TMatrix<double> m2(2, 2);
+
+    m1[0][0] = 5.0; m1[0][1] = 7.0;
+    m1[1][0] = 9.0; m1[1][1] = 11.0;
+
+    m2[0][0] = 1.0; m2[0][1] = 2.0;
+    m2[1][0] = 3.0; m2[1][1] = 4.0;
+
+    TMatrix<double> res = m1 - m2;
+
+    EXPECT_DOUBLE_EQ(res[0][0], 4.0);
+    EXPECT_DOUBLE_EQ(res[0][1], 5.0);
+    EXPECT_DOUBLE_EQ(res[1][0], 6.0);
+    EXPECT_DOUBLE_EQ(res[1][1], 7.0);
+}
+
+TEST(ClassTMatrix, cant_subtract_matrices_with_different_sizes) {
+    TMatrix<double> m1(2, 2);
+    TMatrix<double> m2(3, 3);
+    EXPECT_THROW(m1 - m2, std::invalid_argument);
+}
+
+TEST(ClassTMatrix, can_multiply_matrix_by_scalar) {
+    TMatrix<double> m(2, 2);
+    m[0][0] = 1.0; m[0][1] = 2.0;
+    m[1][0] = 3.0; m[1][1] = 4.0;
+
+    TMatrix<double> res = m * 2.0;
+
+    EXPECT_DOUBLE_EQ(res[0][0], 2.0);
+    EXPECT_DOUBLE_EQ(res[0][1], 4.0);
+    EXPECT_DOUBLE_EQ(res[1][0], 6.0);
+    EXPECT_DOUBLE_EQ(res[1][1], 8.0);
+}
+
+TEST(ClassTMatrix, can_multiply_matrices) {
+    // Матрица 2x3
+    TMatrix<double> m1(2, 3);
+    m1[0][0] = 1.0; m1[0][1] = 2.0; m1[0][2] = 3.0;
+    m1[1][0] = 4.0; m1[1][1] = 5.0; m1[1][2] = 6.0;
+
+    //mатрица 3x2
+    TMatrix<double> m2(3, 2);
+    m2[0][0] = 7.0; m2[0][1] = 8.0;
+    m2[1][0] = 9.0; m2[1][1] = 1.0;
+    m2[2][0] = 2.0; m2[2][1] = 3.0;
+
+    //результат 2x2:
+    //res[0][0] = 1*7 + 2*9 + 3*2 = 7 + 18 + 6 = 31
+    //res[0][1] = 1*8 + 2*1 + 3*3 = 8 + 2 + 9 = 19
+    //res[1][0] = 4*7 + 5*9 + 6*2 = 28 + 45 + 12 = 85
+    
+
+    TMatrix<double> res = m1 * m2;
+
+    EXPECT_EQ(res.get_rows(), 2);
+    EXPECT_EQ(res.get_cols(), 2);
+    EXPECT_DOUBLE_EQ(res[0][0], 31.0);
+    EXPECT_DOUBLE_EQ(res[0][1], 19.0);
+    EXPECT_DOUBLE_EQ(res[1][0], 85.0);
+    EXPECT_DOUBLE_EQ(res[1][1], 55.0);
+}
+
+TEST(ClassTMatrix, cant_multiply_matrices_with_incompatible_sizes) {
+    TMatrix<double> m1(2, 2);
+    TMatrix<double> m2(3, 2); 
+    EXPECT_THROW(m1 * m2, std::invalid_argument);
+}
+
 #endif

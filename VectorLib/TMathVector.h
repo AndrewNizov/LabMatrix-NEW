@@ -7,7 +7,7 @@
 template <typename ValType>
 class TMathVector : public Vector<ValType> {
 public:
-    TMathVector(size_t size = 0, size_t startIndex = 0) : Vector<ValType>() {
+    TMathVector(size_t size = 0) : Vector<ValType>() {
         for (size_t i = 0; i < size; i++)
         {
             this->push_back(ValType(0));
