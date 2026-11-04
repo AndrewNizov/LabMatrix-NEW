@@ -141,10 +141,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="memdata.cpp" />
+    <ClCompile Include="TMathVector.cpp" />
     <ClCompile Include="VectorLib.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="memdata.h" />
+    <ClInclude Include="TMathVector.h" />
     <ClInclude Include="VectorLib.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
